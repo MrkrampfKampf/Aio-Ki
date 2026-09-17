@@ -81,9 +81,10 @@ animation, the graph layout, the drag-and-drop — is written against the platfo
 ## Deploying to GitHub Pages
 
 `.github/workflows/deploy.yml` builds and publishes on every push to `main` (and
-to the development branch). Enable it once, under **Settings → Pages → Build and
-deployment → Source: GitHub Actions**. After that `git push` is the whole
-deployment step.
+to the development branch). It turns Pages on for the repository on its first
+run, so there is nothing to click in repository settings — `git push` is the
+whole deployment step. The site lands at
+`https://<user>.github.io/<repo>/`.
 
 Three things make the static hosting work:
 

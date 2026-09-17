@@ -30,6 +30,10 @@ jobs:
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # Turns Pages on for the repository the first time this runs, so the
+          # deployment needs no manual setup in repository settings.
+          enablement: true
 
       - name: Install
         run: npm ci
