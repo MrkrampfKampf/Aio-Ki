@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#08090c" />
+    <meta
+      name="description"
+      content="AIO KI — one interface for every model. Shared memory, automatic routing and token-aware fallback."
+    />
+    <title>AIO · Personal AI System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Apply the stored appearance before first paint so the shell never flashes.
+      try {
+        var s = JSON.parse(localStorage.getItem('aio.settings.v1') || '{}')
+        var t = s.theme || 'dark'
+        if (t === 'auto')
+          t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+        document.documentElement.dataset.theme = t
+        if (s.accent) document.documentElement.dataset.accent = s.accent
+        if (s.grain === false) document.documentElement.dataset.grain = 'off'
+        var m = s.motion || 'auto'
+        if (m === 'auto')
+          m = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full'
+        document.documentElement.dataset.motion = m
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

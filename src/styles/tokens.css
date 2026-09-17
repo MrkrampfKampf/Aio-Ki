@@ -1,0 +1,209 @@
+/* ==========================================================================
+   AIO — material & type system
+   Two material sets: "graphite" (dark) and "daylight" (light). Everything in
+   the app is built from four material layers — room, chassis, panel, control —
+   plus hairlines that catch light from the top-left.
+   ========================================================================== */
+
+:root {
+  /* --- geometry ------------------------------------------------------- */
+  --r-chassis: 20px;
+  --r-panel: 14px;
+  --r-tile: 10px;
+  --r-chip: 7px;
+  --r-pill: 999px;
+
+  --rail-w: 234px;
+  --rail-w-collapsed: 68px;
+  --bar-h: 46px;
+
+  /* --- type ------------------------------------------------------------ */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Text',
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'JetBrains Mono',
+    'Cascadia Mono', Menlo, Consolas, monospace;
+
+  --t-display: clamp(30px, 3.4vw, 42px);
+  --t-h1: clamp(21px, 2vw, 25px);
+  --t-h2: 16px;
+  --t-body: 14px;
+  --t-small: 12.5px;
+  --t-micro: 11px;
+  --t-label: 10px;
+
+  --ls-label: 0.16em;
+  --ls-tight: -0.022em;
+
+  /* --- motion ---------------------------------------------------------- */
+  --spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-soft: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 140ms;
+  --t-med: 260ms;
+  --t-slow: 520ms;
+
+  --blur-panel: 26px;
+  --blur-heavy: 48px;
+}
+
+/* ---------------------------------------------------------------- GRAPHITE */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --room: #07080b;
+  --room-tint-a: 205;          /* cool key light hue */
+  --room-tint-b: 28;           /* warm fill light hue */
+
+  --chassis: rgba(23, 26, 32, 0.72);
+  --chassis-top: rgba(255, 255, 255, 0.055);
+  /* Root-level overlays really do blur their backdrop. */
+  --overlay: rgba(19, 22, 28, 0.9);
+  /* Surfaces nested inside the chassis cannot blur (a backdrop-filter inside
+     another one samples nothing in Chromium), so they carry their own body. */
+  --overlay-solid: rgba(22, 25, 31, 0.985);
+
+  --glass-1: rgba(255, 255, 255, 0.028);
+  --glass-2: rgba(255, 255, 255, 0.05);
+  --glass-3: rgba(255, 255, 255, 0.075);
+  --glass-hover: rgba(255, 255, 255, 0.042);
+  --glass-sunken: rgba(0, 0, 0, 0.26);
+
+  --line-1: rgba(255, 255, 255, 0.062);
+  --line-2: rgba(255, 255, 255, 0.11);
+  --line-3: rgba(255, 255, 255, 0.2);
+  --edge-light: rgba(255, 255, 255, 0.1);
+
+  --text-1: rgba(237, 241, 247, 0.96);
+  --text-2: rgba(226, 232, 240, 0.66);
+  --text-3: rgba(216, 226, 240, 0.42);
+  --text-4: rgba(210, 222, 240, 0.26);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 8px 26px -10px rgba(0, 0, 0, 0.72);
+  --shadow-3: 0 30px 70px -24px rgba(0, 0, 0, 0.9);
+  --shadow-chassis: 0 60px 120px -40px rgba(0, 0, 0, 0.92),
+    0 0 0 1px rgba(255, 255, 255, 0.045);
+
+  --ok: #4fd18b;
+  --warn: #f5b33c;
+  --crit: #ff6b52;
+  --idle: rgba(190, 205, 225, 0.4);
+
+  --grain-opacity: 0.042;
+  --sheen: 0.16;
+}
+
+/* ---------------------------------------------------------------- DAYLIGHT */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --room: #dfe4ec;
+  --room-tint-a: 205;
+  --room-tint-b: 34;
+
+  --chassis: rgba(245, 247, 251, 0.82);
+  --chassis-top: rgba(255, 255, 255, 0.9);
+  --overlay: rgba(250, 251, 253, 0.92);
+  --overlay-solid: rgba(251, 252, 254, 0.99);
+
+  --glass-1: rgba(255, 255, 255, 0.5);
+  --glass-2: rgba(255, 255, 255, 0.82);
+  --glass-3: rgba(255, 255, 255, 0.92);
+  --glass-hover: rgba(255, 255, 255, 0.92);
+  --glass-sunken: rgba(14, 22, 38, 0.045);
+
+  --line-1: rgba(16, 26, 44, 0.09);
+  --line-2: rgba(16, 26, 44, 0.15);
+  --line-3: rgba(16, 26, 44, 0.26);
+  --edge-light: rgba(255, 255, 255, 0.95);
+
+  --text-1: rgba(14, 20, 32, 0.94);
+  --text-2: rgba(20, 30, 48, 0.64);
+  --text-3: rgba(24, 36, 56, 0.45);
+  --text-4: rgba(28, 42, 64, 0.3);
+
+  --shadow-1: 0 1px 2px rgba(20, 32, 54, 0.1);
+  --shadow-2: 0 10px 28px -14px rgba(20, 32, 54, 0.4);
+  --shadow-3: 0 30px 70px -28px rgba(20, 32, 54, 0.45);
+  --shadow-chassis: 0 50px 110px -46px rgba(18, 30, 52, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.7);
+
+  --ok: #12a05e;
+  --warn: #c67c08;
+  --crit: #dc3f28;
+  --idle: rgba(40, 56, 80, 0.35);
+
+  --grain-opacity: 0.03;
+  --sheen: 0.55;
+}
+
+/* ------------------------------------------------------------------ ACCENT */
+:root,
+:root[data-accent='amber'] {
+  --accent: #ff9f45;
+  --accent-bright: #ffc189;
+  --accent-ink: #2a1503;
+  --accent-soft: rgba(255, 159, 69, 0.16);
+  --accent-line: rgba(255, 159, 69, 0.42);
+  --accent-glow: rgba(255, 159, 69, 0.34);
+}
+:root[data-accent='ice'] {
+  --accent: #6fd3ff;
+  --accent-bright: #aee7ff;
+  --accent-ink: #03202c;
+  --accent-soft: rgba(111, 211, 255, 0.16);
+  --accent-line: rgba(111, 211, 255, 0.42);
+  --accent-glow: rgba(111, 211, 255, 0.32);
+}
+:root[data-accent='lime'] {
+  --accent: #9fe870;
+  --accent-bright: #c8f5a8;
+  --accent-ink: #15240a;
+  --accent-soft: rgba(159, 232, 112, 0.16);
+  --accent-line: rgba(159, 232, 112, 0.42);
+  --accent-glow: rgba(159, 232, 112, 0.3);
+}
+:root[data-accent='signal'] {
+  --accent: #ff6a5e;
+  --accent-bright: #ffa197;
+  --accent-ink: #2c0a06;
+  --accent-soft: rgba(255, 106, 94, 0.16);
+  --accent-line: rgba(255, 106, 94, 0.42);
+  --accent-glow: rgba(255, 106, 94, 0.32);
+}
+
+:root[data-theme='light'][data-accent='amber'] { --accent: #e07a10; --accent-bright: #b96208; }
+:root[data-theme='light'][data-accent='ice'] { --accent: #0f8fc4; --accent-bright: #0b7099; }
+:root[data-theme='light'][data-accent='lime'] { --accent: #4f9b1f; --accent-bright: #3d7a16; }
+:root[data-theme='light'][data-accent='signal'] { --accent: #dc4436; --accent-bright: #b93327; }
+
+/* --------------------------------------------------------- MODEL IDENTITY */
+:root {
+  --m-claude: #e08a5a;
+  --m-claude-soft: rgba(224, 138, 90, 0.15);
+  --m-gpt: #56cfa2;
+  --m-gpt-soft: rgba(86, 207, 162, 0.15);
+  --m-gemini: #7ea6f5;
+  --m-gemini-soft: rgba(126, 166, 245, 0.15);
+  --m-local: #a9b4c4;
+  --m-local-soft: rgba(169, 180, 196, 0.14);
+}
+:root[data-theme='light'] {
+  --m-claude: #b95f2c;
+  --m-gpt: #0f9268;
+  --m-gemini: #3b6fd4;
+  --m-local: #5b6878;
+}
+
+[data-model='claude'] { --model: var(--m-claude); --model-soft: var(--m-claude-soft); }
+[data-model='gpt'] { --model: var(--m-gpt); --model-soft: var(--m-gpt-soft); }
+[data-model='gemini'] { --model: var(--m-gemini); --model-soft: var(--m-gemini-soft); }
+[data-model='local'] { --model: var(--m-local); --model-soft: var(--m-local-soft); }
+
+/* ------------------------------------------------------------ REDUCE MOTION */
+:root[data-motion='reduced'] {
+  --t-fast: 1ms;
+  --t-med: 1ms;
+  --t-slow: 1ms;
+}
