@@ -81,10 +81,17 @@ animation, the graph layout, the drag-and-drop — is written against the platfo
 ## Deploying to GitHub Pages
 
 `.github/workflows/deploy.yml` builds and publishes on every push to `main` (and
-to the development branch). It turns Pages on for the repository on its first
-run, so there is nothing to click in repository settings — `git push` is the
-whole deployment step. The site lands at
-`https://<user>.github.io/<repo>/`.
+to the development branch). The site lands at `https://<user>.github.io/<repo>/`.
+
+**One-time setup:** open **Settings → Pages → Build and deployment** and set
+**Source** to **GitHub Actions**. A workflow cannot switch this on for you — the
+token Actions runs with is refused by the Pages API — so the first deployment
+waits for it. After that `git push` is the whole deployment step; re-run the
+last workflow from the Actions tab to publish immediately.
+
+The build itself does not depend on that switch: it resolves the base path from
+the repository name when Pages is still off, so `npm ci && npm run build` and the
+uploaded artifact stay green either way.
 
 Three things make the static hosting work:
 

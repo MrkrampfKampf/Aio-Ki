@@ -27,23 +27,35 @@ jobs:
           node-version: 22
           cache: npm
 
+      # Reports the site's base path. It fails while Pages is switched off for
+      # the repository, which must not take the build down with it — only the
+      # deploy job genuinely needs Pages to exist.
       - name: Configure Pages
         id: pages
+        continue-on-error: true
         uses: actions/configure-pages@v5
-        with:
-          # Turns Pages on for the repository the first time this runs, so the
-          # deployment needs no manual setup in repository settings.
-          enablement: true
+
+      - name: Resolve base path
+        id: base
+        run: |
+          path='${{ steps.pages.outputs.base_path }}'
+          if [ -z "$path" ]; then
+            # Same rule the action applies: a project site lives under /<repo>,
+            # a <user>.github.io site at the root.
+            case '${{ github.event.repository.name }}' in
+              *.github.io) path='' ;;
+              *) path='/${{ github.event.repository.name }}' ;;
+            esac
+          fi
+          echo "path=${path}/" >> "$GITHUB_OUTPUT"
 
       - name: Install
         run: npm ci
 
       - name: Typecheck and build
-        # base_path is "/<repo>" for a project site and "" for a user site.
-        # Vite wants a trailing slash either way, so "/" is the fallback.
         run: npm run build
         env:
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}/
+          BASE_PATH: ${{ steps.base.outputs.path }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
