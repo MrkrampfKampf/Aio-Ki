@@ -11,3 +11,7 @@ dist-ssr
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# /brag launch-video runs (plan, composition, render). The bundled music is
+# not cleared for redistribution, and this repository is public.
+brag-output*/
