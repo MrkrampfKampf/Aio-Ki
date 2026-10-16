@@ -37,8 +37,11 @@ if exist "aircard.exe" (
     echo.
     echo  !! aircard.exe NOT FOUND !!
     echo.
-    echo  Download it from:
-    echo  https://github.com/Lumid-Off/AirCard-Windows/releases
+    echo  IMPORTANT: You need the DHAVA-GAUTAMA FORK, not the Lumid-Off original!
+    echo  Only the fork has CLI support that this tool needs.
+    echo.
+    echo  Download from:
+    echo  https://github.com/dhava-gautama/AirCard-Windows/releases
     echo.
     echo  Place aircard.exe in this folder:
     echo  %~dp0

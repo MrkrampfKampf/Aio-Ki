@@ -31,6 +31,9 @@ if exist "dist\WalletReskin.exe" (
     echo       dist\WalletReskin.exe
     echo.
     echo Copy it anywhere, put aircard.exe next to it, and run it.
+    echo.
+    echo IMPORTANT: Use aircard.exe from the dhava-gautama fork:
+    echo https://github.com/dhava-gautama/AirCard-Windows/releases
 ) else (
     echo [ERROR] Build failed. Check the output above for errors.
 )
