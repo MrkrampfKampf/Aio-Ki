@@ -1,17 +1,34 @@
-node_modules
-dist
-dist-ssr
-.DS_Store
-*.local
-*.log
-.vite
-.idea
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# IDE
+.idea/
 .vscode/*
 !.vscode/extensions.json
 
-# TypeScript incremental build info
-*.tsbuildinfo
+# OS
+.DS_Store
+Thumbs.db
 
-# /brag launch-video runs (plan, composition, render). The bundled music is
-# not cleared for redistribution, and this repository is public.
-brag-output*/
+# App temp files
+temp/
+backups/
+
+# AirCard binary (user must supply their own)
+aircard.exe
+AirCard.exe
